@@ -1,25 +1,19 @@
 on:
   push:
     branches: [main]
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-
+          username: ${{secrets.DOCKER_USERNAME}}
+          password: ${{secrets.DOCKER_TOKEN}}
       - name: Build the Docker Image
         run: docker build -t python-app .
-
       - name: Tag the Docker Image
-        run: docker tag python-app:latest ${{ secrets.DOCKER_USERNAME }}/firstrepo:${GITHUB_SHA}
-
+        run: docker tag python-app:latest ${{secrets.DOCKER_USERNAME}}/firstrepo:${GITHUB_SHA}
       - name: Push the Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/python-flask-demo:${GITHUB_SHA}
+        run: docker push ${{secrets.DOCKER_USERNAME}}/firstrepo:${GITHUB_SHA}
